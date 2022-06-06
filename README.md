@@ -3,7 +3,7 @@
 This is a meeting room scheduling application powered by ReactJS and firebase which provides functions such as create, update and delete available meetings. Meeting room scheduling journey can start from registering places and rooms with appealing photos and utilities provided in the rooms, you can manage meetings that are scheduled by you and refer you as an attendee. 
 
 ## Demo link
-queueting.polymathian.me
+<http://queueting.polymathian.me/>
 
 ## Features
 * Email authentication
