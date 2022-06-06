@@ -1,10 +1,10 @@
-import React, { useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Histories from '../Histories/Histories';
-import * as actions from '../../store/actions/index';
-import { isTimestamp } from '../Utils/utility';
-import { useHistory } from 'react-router-dom';
-import Spinner from '../UI/Spinner/Spinner';
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Histories from "../Histories/Histories";
+import * as actions from "../../store/actions/index";
+import { isTimestamp } from "../Utils/utility";
+import { useHistory } from "react-router-dom";
+import Spinner from "../UI/Spinner/Spinner";
 
 function List() {
   const histories = useSelector((state) => state.history.histories);
@@ -31,7 +31,7 @@ function List() {
 
   useEffect(() => {
     if (!loggedIn)
-      history.push('/');
+      history.push("/");
   }, [history, loggedIn]);
 
   let meetings = [];

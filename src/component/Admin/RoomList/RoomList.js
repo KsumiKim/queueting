@@ -12,6 +12,7 @@ import CustomTableCell from "../../UI/CustomTableCell/CustomTableCell";
 import Button from "../../UI/Button/Button";
 import RoomRegister from "../RoomRegister/RoomRegister";
 import { db } from "../../../firebase-queueting";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
@@ -67,38 +68,32 @@ function RoomList(props) {
   const [isUpdating, setIsUpdating] = useState();
   const [updated, setUpdated] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const places = useSelector((state) => state.place.places);
   const currentPlace = props.currentPlace;
 
   useEffect(() => {
-    const fetchRooms = async () => {
-      if (!currentPlace || !currentPlace.id) {
-        return;
-      }
-      const roomRef = await db.collection("places").doc(currentPlace.id).collection("rooms").get();
+    if (currentPlace && currentPlace.id) {
       let rooms = [];
-      roomRef.forEach(roomDoc => {
-        const room = roomDoc.data();
-        const roomId = roomDoc.id;
+      const selectedPlace = places.find(place => place.placeId === currentPlace.id);
+
+      selectedPlace.rooms.forEach(room => {
         rooms.push(
-          { id: roomId,
-            name: room.name,
-            building: room.building,
-            floor: room.floor,
-            number: room.number,
-            capacity: room.capacity,
+          { id: room.roomId,
+            name: room.data.name,
+            building: room.data.building,
+            floor: room.data.floor,
+            number: room.data.number,
+            capacity: room.data.capacity,
             dpFacilities: getFacilities(room),
-            TV: room.TV,
-            projector: room.projector,
-            wifi: room.wifi,
-            whiteboard: room.whiteboard
+            TV: room.data.TV,
+            projector: room.data.projector,
+            wifi: room.data.wifi,
+            whiteboard: room.data.whiteboard
           });
       });
       setRows(rooms);
     }
-    if (currentPlace) {
-      fetchRooms();
-    }
-  }, [currentPlace, updated]);
+  }, [currentPlace, updated, places]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -124,19 +119,19 @@ function RoomList(props) {
   const getFacilities = (room) => {
     let facilities = [];
 
-    if (room.TV) {
+    if (room.data.TV) {
       facilities.push(facilitiesObj.TV);
     }
 
-    if (room.projector) {
+    if (room.data.projector) {
       facilities.push(facilitiesObj.projector);
     }
 
-    if (room.whiteboard) {
+    if (room.data.whiteboard) {
       facilities.push(facilitiesObj.whiteboard);
     }
 
-    if (room.wifi) {
+    if (room.data.wifi) {
       facilities.push(facilitiesObj.wifi);
     }
     return facilities.join(", ");

@@ -76,6 +76,78 @@ const reducer = (state = initialState, action) => {
         error: action.error,
         loading: null
     }
+    case actionTypes.UPDATE_ROOM_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.UPDATE_ROOM_SUCCESS:
+      const placeIdx = state.places.findIndex(place => place.placeId === action.placeId);
+      const place = state.places[placeIdx];
+      const oldRoomIdx = place.rooms.findIndex(room => room.roomId === action.roomId);
+
+      let newRooms = [...state.places[placeIdx].rooms];
+      newRooms[oldRoomIdx] = action.updatedRoom;
+      place.rooms = newRooms;
+
+      let places = [...state.places];
+      places[placeIdx].rooms = newRooms;
+      console.log(places);
+      return {
+        ...state,
+        places: places,
+        loading: null
+    }
+    case actionTypes.UPDATE_ROOM_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loading: null
+    }
+
+    case actionTypes.CREATE_ROOM_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.CREATE_ROOM_SUCCESS:
+      const originalPlaces = [...state.places];
+      const updatedPlaceIdx = state.places.findIndex(place => place.placeId === action.placeId);
+      originalPlaces[updatedPlaceIdx].rooms.push(action.createdRoom);
+
+      return {
+        ...state,
+        places: originalPlaces,
+        loading: null
+      }
+    case actionTypes.CREATE_ROOM_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loading: null
+      }
+    case actionTypes.DELETE_ROOM_START:
+      return {
+        ...state,
+        loading: true
+      }
+    case actionTypes.DELETE_ROOM_SUCCESS:
+      const original = [...state.places];
+      const targetPlaceIdx = state.places.findIndex(place => place.placeId === action.placeId);
+      const filteredRooms = original[targetPlaceIdx].rooms.filter(room => room.roomId !== action.roomId);;
+      original[targetPlaceIdx].rooms = filteredRooms;
+
+      return {
+        ...state,
+        places: original,
+        loading: null
+      }
+    case actionTypes.DELETE_ROOM_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loading: null
+      }
     default:
       return state;
   }

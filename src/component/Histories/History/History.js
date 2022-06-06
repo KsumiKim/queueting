@@ -1,15 +1,15 @@
-import React, { useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import HistoryDetail from './HistoryDetail/HistoryDetail';
-import * as action from '../../../store/actions/index';
-import { useDispatch } from 'react-redux';
-import styles from '../../../assets/jss/historyStyle';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import React, { useState, useCallback } from "react";
+import { useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import HistoryDetail from "./HistoryDetail/HistoryDetail";
+import * as action from "../../../store/actions/index";
+import { useDispatch } from "react-redux";
+import styles from "../../../assets/jss/historyStyle";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 const useStyles = makeStyles(styles);
 
@@ -36,7 +36,7 @@ const History = props => {
     } else {
       info.push(number);
     }
-    return info.join('');
+    return info.join("");
   }
 
   const modalOpenHandler = (historyId) => {

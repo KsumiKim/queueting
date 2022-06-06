@@ -1,29 +1,29 @@
-import React from 'react';
-import Rooms from './Rooms/Rooms';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import Rooms from "./Rooms/Rooms";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    paddingRight: '40px',
-    paddingLeft: '40px',
-    display: 'block',
-    marginBottom: '24px',
-    padding: '16px'
+    paddingRight: "40px",
+    paddingLeft: "40px",
+    display: "block",
+    marginBottom: "24px",
+    padding: "16px"
   },
   place: {
-    display: 'flex'
+    display: "flex"
   },
   placeName: {
-    fontSize: '28px',
-    fontWeight: '700'
+    fontSize: "28px",
+    fontWeight: "700"
   },
   placeAddress: {
-    fontSize: '20px',
-    fontWeight: '400',
-    paddingLeft: '20px'
+    fontSize: "20px",
+    fontWeight: "400",
+    paddingLeft: "20px"
   },
   rooms: {
-    display: 'flex'
+    display: "flex"
   }
 });
 

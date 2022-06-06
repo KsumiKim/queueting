@@ -2,7 +2,10 @@ export {
   fetchPlaces,
   createPlace,
   deletePlace,
-  updatePlace
+  updatePlace,
+  createRoom,
+  deleteRoom,
+  updateRoom
 } from "./place";
 
 export {

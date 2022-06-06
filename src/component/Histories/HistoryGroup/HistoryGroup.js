@@ -1,7 +1,7 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Spinner from '../../UI/Spinner/Spinner';
-import History from '../History/History';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Spinner from "../../UI/Spinner/Spinner";
+import History from "../History/History";
 
 const useStyles = makeStyles({
   date: {
@@ -16,21 +16,9 @@ function HistoryGroup(props) {
   const classes = useStyles();
   const { date, historyList, past, places } = props;
 
-  // const dispatch = useDispatch();
-  // const onInitPlaces = useCallback(
-  //   () => dispatch(actions.fetchPlaces()),
-  //   [dispatch]
-  // );
-
-  // useEffect(() => {
-  //   if (!places)
-  //     onInitPlaces();
-  // }, [onInitPlaces]);
-
   function findPlace(placeId, roomId) {
     let targetPlace = null;
     let targetRoom = null;
-
 
     places.forEach(place => {
       if (place.placeId === placeId) {
@@ -63,7 +51,6 @@ function HistoryGroup(props) {
               />)
       });
   }
-
 
   return (
   <div>

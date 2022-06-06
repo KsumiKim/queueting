@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import Modal from '../../../UI/Modal/Modal';
-import Button from '../../../UI/Button/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import * as actions from '../../../../store/actions/index';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import Modal from "../../../UI/Modal/Modal";
+import Button from "../../../UI/Button/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import * as actions from "../../../../store/actions/index";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "../../../../assets/jss/historyDetailStyle";
-import Meeting from '../../../Meeting/Meeting';
-import Spinner from '../../../UI/Spinner/Spinner';
-import { useHistory } from 'react-router-dom';
+import Meeting from "../../../Meeting/Meeting";
+import Spinner from "../../../UI/Spinner/Spinner";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 
@@ -30,7 +30,7 @@ const HistoryDetail = (props) => {
     let day = startDate.getDate();
 
     formattedDate.push(year, month, day);
-    const date = formattedDate.join('-');
+    const date = formattedDate.join("-");
     const fromTime = formatTime(startDate);
     const toTime = formatTime(endDate);
 
@@ -42,7 +42,7 @@ const HistoryDetail = (props) => {
     let minute = date.getMinutes();
 
     if (minute === 0)
-      minute = '00';
+      minute = "00";
 
     return hour + ":" + minute;
   }
@@ -55,7 +55,7 @@ const HistoryDetail = (props) => {
 
   const deleteHistoryHandler = () => {
     dispatch(actions.deleteHistory(props.historyId));
-    history.push('/home');
+    history.push("/home");
     props.closed();
   }
 

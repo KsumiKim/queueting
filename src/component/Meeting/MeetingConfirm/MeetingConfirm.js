@@ -1,11 +1,11 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
-import Spinner from '../../UI/Spinner/Spinner';
-import { useHistory } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import * as actions from '../../../store/actions/index';
-import styles from '../../../assets/jss/meetingConfirmStyle';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Button from "@material-ui/core/Button";
+import Spinner from "../../UI/Spinner/Spinner";
+import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import * as actions from "../../../store/actions/index";
+import styles from "../../../assets/jss/meetingConfirmStyle";
 
 const useStyles = makeStyles(styles);
 
@@ -62,7 +62,7 @@ function MeetingConfirm(props) {
     }, meeting.attendees));
 
     props.closed();
-    history.push('/home');
+    history.push("/home");
   }
 
   const formatDate = () => {
@@ -72,12 +72,12 @@ function MeetingConfirm(props) {
     let day = meetingDate.getDate();
 
     if (month < 2)
-        month = '0' + month;
+        month = "0" + month;
     if (day.length < 2)
-        day = '0' + day;
+        day = "0" + day;
 
     formattedDate.push(year, month, day);
-    const date = formattedDate.join('-');
+    const date = formattedDate.join("-");
     const startTime = fromTime.substring(0, 5);
     const endTime = toTime.substring(0, 5);
 
@@ -89,7 +89,7 @@ function MeetingConfirm(props) {
     const attendeeList = attendees.map(attendee => {
       return attendee.name;
     } );
-    return attendeeList.join(', ');
+    return attendeeList.join(", ");
   }
   let summary = (
   <div>

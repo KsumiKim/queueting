@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { db } from "../../firebase-queueting";
+import { db, storage } from "../../firebase-queueting";
 
 export const fetchPlacesSuccess = (fetchedPlace) => {
   return {
@@ -209,6 +209,125 @@ export const fetchRooms = (placeId) => {
     } catch (error) {
       console.error(error);
       dispatch(fetchRoomsFail(error));
+    }
+  }
+}
+
+export const updateRoomStart = () => {
+  return {
+    type: actionTypes.UPDATE_ROOM_START
+  }
+}
+
+export const updateRoomSuccess = (placeId, roomId, room) => {
+  return {
+    type: actionTypes.UPDATE_ROOM_SUCCESS,
+    placeId: placeId,
+    roomId: roomId,
+    updatedRoom: room
+  }
+}
+
+export const updateRoomFail = (error) => {
+  return {
+    type: actionTypes.UPDATE_ROOM_FAIL,
+    error: error
+  }
+}
+
+export const updateRoom = (placeId, roomId, room, attachment) => {
+  return async dispatch => {
+    dispatch(updateRoomStart());
+    try {
+      const roomRef = db.collection("places").doc(placeId).collection("rooms").doc(roomId);
+
+      await roomRef.update(room).then(async () => {
+        await storage.child(`/places/rooms/${roomId}.jpg`).putString(attachment, "data_url");
+      });
+
+      dispatch(updateRoomSuccess(placeId, roomId, room));
+    } catch (error) {
+      dispatch(updateRoomFail(error));
+      console.error(error);
+    }
+  }
+}
+
+export const createRoomStart = () => {
+  return {
+    type: actionTypes.CREATE_ROOM_START
+  }
+}
+
+export const createRoomSuccess = (placeId, room) => {
+  return {
+    type: actionTypes.CREATE_ROOM_SUCCESS,
+    placeId: placeId,
+    createdRoom: room
+  }
+}
+
+export const createRoomFail = (error) => {
+  return {
+    type: actionTypes.CREATE_ROOM_FAIL,
+    error: error
+  }
+}
+
+export const createRoom = (placeId, room, attachment) => {
+  return async dispatch => {
+    dispatch(createRoomStart());
+    let createdRoom = {};
+
+    try {
+      await db.collection("places").doc(placeId).collection("rooms").add(room)
+      .then( async (roomRef) => {
+        createdRoom = {
+          roomId: roomRef.id,
+          data: room
+        };
+        await storage.child(`/places/rooms/${roomRef.id}.jpg`).putString(attachment, "data_url");
+      });
+
+      dispatch(createRoomSuccess(placeId, createdRoom));
+    } catch (error) {
+      dispatch(createRoomFail(error));
+      console.error(error);
+    }
+  }
+}
+
+export const deleteRoomStart = () => {
+  return {
+    type: actionTypes.DELETE_ROOM_START
+  }
+}
+
+export const deleteRoomSuccess = (placeId, roomId) => {
+  return {
+    type: actionTypes.DELETE_ROOM_SUCCESS,
+    placeId: placeId,
+    roomId: roomId
+  }
+}
+
+export const deleteRoomFail = (error) => {
+  return {
+    type: actionTypes.DELETE_ROOM_FAIL,
+    error: error
+  }
+}
+
+export const deleteRoom = (placeId, roomId) => {
+  return async dispatch => {
+    dispatch(deleteRoomStart());
+
+    try {
+      await db.collection("places").doc(placeId).collection("rooms").doc(roomId).delete();
+      dispatch(deleteRoomSuccess(placeId, roomId));
+    } catch (error) {
+      dispatch(deleteRoomFail(error));
+      console.error(error);
     }
   }
 }

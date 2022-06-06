@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import MeetingConfirm from './MeetingConfirm/MeetingConfirm';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import * as actions from '../../store/actions/index';
-import CustomInput from '../UI/Input/CustomInput';
+import React, { useState, useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import MeetingConfirm from "./MeetingConfirm/MeetingConfirm";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import * as actions from "../../store/actions/index";
+import CustomInput from "../UI/Input/CustomInput";
 import "react-datetime/css/react-datetime.css";
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import styles from '../../assets/jss/meetingStyle';
-import Button from '../UI/Button/Button';
-import Spinner from '../UI/Spinner/Spinner';
-import { meetingTimes, isEmpty, validMeetingTimeSelected } from '../Utils/utility';
-import {db} from '../../firebase-queueting';
-import Chip from '@material-ui/core/Chip';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import styles from "../../assets/jss/meetingStyle";
+import Button from "../UI/Button/Button";
+import Spinner from "../UI/Spinner/Spinner";
+import { meetingTimes, isEmpty, validMeetingTimeSelected } from "../Utils/utility";
+import {db} from "../../firebase-queueting";
+import Chip from "@material-ui/core/Chip";
 
 const useStyles = makeStyles(styles);
 
@@ -22,8 +22,8 @@ function Meeting(props) {
 
   const classes = useStyles();
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [fromTime, setFromTime] = useState('');
-  const [toTime, setToTime] = useState('');
+  const [fromTime, setFromTime] = useState("");
+  const [toTime, setToTime] = useState("");
   const [continuing, setContinuing] = useState(false);
   const [subject, setSubject] = useState(prevSubject);
   const [description, setDescription] = useState(prevDescription);
@@ -39,7 +39,7 @@ function Meeting(props) {
   let history = useHistory();
 
   const fetchUsers = async () => {
-    const userRef = await db.collection('users').get();
+    const userRef = await db.collection("users").get();
     let users = [];
 
     userRef.forEach(userDoc => {
@@ -101,19 +101,19 @@ function Meeting(props) {
 
   const setTime = (time) => {
     if (!time) {
-      return '';
+      return "";
     }
     const hour = time.toDate().getHours();
     let result = hour;
 
     if (result < 10) {
-      result = '0' + result;
+      result = "0" + result;
     }
 
     if (hour < 13) {
-      result += ':00 A.M.';
+      result += ":00 A.M.";
     } else {
-      result += ':00 P.M.';
+      result += ":00 P.M.";
     }
 
     return result;
@@ -147,17 +147,17 @@ function Meeting(props) {
 
   const checkValidity = () => {
     if (!isEmpty(subject)) {
-      alert('미팅 주제를 선택하세요.')
+      alert("미팅 주제를 선택하세요.")
       return;
     }
 
     if (!isEmpty(fromTime) && !isEmpty(toTime)) {
-      alert('미팅 시간을 선택하세요')
+      alert("미팅 시간을 선택하세요")
       return;
     }
 
     if (!validMeetingTimeSelected(fromTime, toTime)) {
-      alert('미팅 완료 시간은 시작 시간 이후로 설정되어야 합니다.')
+      alert("미팅 완료 시간은 시작 시간 이후로 설정되어야 합니다.")
       return;
     }
   }
@@ -186,7 +186,7 @@ function Meeting(props) {
       },
     }))
     props.closed();
-    history.push('/home');
+    history.push("/home");
   }
 
   const createMeeting = () => {
@@ -219,15 +219,15 @@ function Meeting(props) {
   let meetingInfo = (
     <div>
       <div className={classes.headerWrap}>
-        <div className={classes.header}>{create ? 'ADD' : 'UPDATE'} MEETING</div>
+        <div className={classes.header}>{create ? "ADD" : "UPDATE"} MEETING</div>
       </div>
       <div className={classes.container}>
         <div className={classes.wrap}>
           <div className={classes.title}>AGENDA</div>
           <div className={classes.input}>
             <CustomInput
-              elementType='requiredInput'
-              label='Please enter the meeting agenda'
+              elementType="requiredInput"
+              label="Please enter the meeting agenda"
               value={subject}
               changed={subjectChangeHandler}/>
           </div>
@@ -236,7 +236,7 @@ function Meeting(props) {
           <div className={classes.title}>DATE</div>
           <div className={classes.date}>
             <CustomInput
-              elementType='datePicker'
+              elementType="datePicker"
               value={selectedDate}
               changed={dateChangeHandler}/>
           </div>
@@ -245,15 +245,15 @@ function Meeting(props) {
           <div className={classes.title}>TIME</div>
           <div className={classes.time}>
             <CustomInput
-              elementType='timeSelector'
-              type='From'
+              elementType="timeSelector"
+              type="From"
               time={fromTime}
               changed={fromTimeChangeHandler}
               timeList={timeList}
             />
             <CustomInput
-              elementType='timeSelector'
-              type='To'
+              elementType="timeSelector"
+              type="To"
               time={toTime}
               changed={toTimeChangeHandler}
               timeList={timeList}
@@ -295,8 +295,8 @@ function Meeting(props) {
           <div className={classes.title}>DESCRIPTION</div>
           <div className={classes.input}>
             <CustomInput
-              elementType='generalInput'
-              label='Please enter the meeting details'
+              elementType="generalInput"
+              label="Please enter the meeting details"
               value={description}
               changed={descriptionChangeHandler}/>
           </div>

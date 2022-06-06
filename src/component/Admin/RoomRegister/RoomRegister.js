@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
 import Modal from "../../UI/Modal/Modal";
 import roomImg from "../../../assets/img/1.jpg";
 import CustomInput from "../../UI/Input/CustomInput";
@@ -13,6 +14,7 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import { db, storage } from "../../../firebase-queueting";
 import Spinner from "../../UI/Spinner/Spinner";
+import * as action from "../../../store/actions/index";
 
 const useStyles = makeStyles(styles);
 
@@ -21,6 +23,7 @@ function RoomRegister(props) {
 
   const classes = useStyles();
   const fileInput = useRef();
+  const dispatch = useDispatch();
   const [placeName, setPlaceName] = useState(currentRoom ? currentRoom.building : "");
   const [roomName, setRoomName] = useState(currentRoom ? currentRoom.name : "");
   const [floor, setFloor] = useState(currentRoom ? currentRoom.floor : 0);
@@ -34,6 +37,21 @@ function RoomRegister(props) {
     projector: currentRoom ? currentRoom.projector : false
   });
   const isUpdating = !!currentRoom;
+
+  const onUpdateRoom = useCallback(
+    (placeId, roomId, room, attachment) => dispatch(action.updateRoom(placeId, roomId, room, attachment)),
+    [dispatch]
+  );
+
+  const onCreateRoom = useCallback(
+    (placeId, room, attachment) => dispatch(action.createRoom(placeId, room, attachment)),
+    [dispatch]
+  );
+
+  const onDeleteRoom = useCallback(
+    (placeId, roomId) => dispatch(action.deleteRoom(placeId, roomId)),
+    [dispatch]
+  );
 
   useEffect(() => {
     if (currentRoom) {
@@ -96,12 +114,8 @@ function RoomRegister(props) {
       capacity: capacity
     };
 
-    await db.collection("places").doc(currentPlace.id).collection("rooms").add(roomObj)
-    .then( async (roomRef) => {
-      await storage.child(`/places/rooms/${roomRef.id}.jpg`).putString(attachment, "data_url");
-      props.closed(true);
-    });
-
+    onCreateRoom(currentPlace.id, roomObj, attachment);
+    props.closed(true);
   }
 
   const onUpdate = async () => {
@@ -114,19 +128,13 @@ function RoomRegister(props) {
       capacity: capacity
     };
 
-    const roomRef = db.collection("places").doc(currentPlace.id).collection("rooms").doc(currentRoom.id);
-
-    await roomRef.update(roomObj).then(async () => {
-      await storage.child(`/places/rooms/${currentRoom.id}.jpg`).putString(attachment, "data_url");
-      props.closed(true);
-    });
-
+    onUpdateRoom(currentPlace.id, currentRoom.id, roomObj, attachment);
+    props.closed(true);
   }
 
   const onDelete = async () => {
-    await db.collection("places").doc(currentPlace.id).collection("rooms").doc(currentRoom.id).delete().then(() => {
-      props.closed(true);
-    });
+    onDeleteRoom(currentPlace.id, currentRoom.id);
+    props.closed(true);
   }
 
   let content = <Spinner />;

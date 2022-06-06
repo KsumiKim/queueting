@@ -31,6 +31,7 @@
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
+    "serve": "^13.0.2",
     "uuid": "^8.3.2"
   },
   "scripts": {
@@ -63,6 +64,5 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
-  },
-  "homepage": "https://Ksumikim.github.io/queueting"
+  }
 }

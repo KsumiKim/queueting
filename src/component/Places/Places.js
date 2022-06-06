@@ -1,15 +1,15 @@
-import React, { useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Place from './Place/Place';
-import { makeStyles } from '@material-ui/core/styles';
-import Spinner from '../UI/Spinner/Spinner';
-import * as action from '../../store/actions/index';
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Place from "./Place/Place";
+import { makeStyles } from "@material-ui/core/styles";
+import Spinner from "../UI/Spinner/Spinner";
+import * as action from "../../store/actions/index";
 
 const useStyles = makeStyles({
   root: {
-    display: 'block',
-    boxSizing: 'border-box', 
-    fontSize: '17px'
+    display: "block",
+    boxSizing: "border-box",
+    fontSize: "17px"
   }
 });
 
@@ -19,7 +19,7 @@ function Places () {
   const dispatch = useDispatch();
 
   const onInitPlaces = useCallback(
-    () => dispatch(action.fetchPlaces()), 
+    () => dispatch(action.fetchPlaces()),
     [dispatch]
   );
 
@@ -27,16 +27,16 @@ function Places () {
     if (!places)
       onInitPlaces();
   }, [onInitPlaces, places]);
-  
+
   let placeInfo = <Spinner />
 
   if (places) {
     placeInfo = places.map(place => {
       return <Place
-          key={place.placeId} 
+          key={place.placeId}
           placeId={place.placeId}
-          placeName={place.data.name} 
-          placeAddress={place.data.address} 
+          placeName={place.data.name}
+          placeAddress={place.data.address}
           rooms={place.rooms}/>;
     })
   }

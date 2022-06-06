@@ -1,31 +1,31 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import RoomDetail from './RoomDetail/RoomDetail';
-import {storage} from '../../../../../firebase-queueting';
-import Spinner from '../../../../UI/Spinner/Spinner';
-import Modal from '../../../../UI/Modal/Modal';
-import {useSelector, useDispatch} from 'react-redux';
-import * as action from '../../../../../store/actions/index';
-import Meeting from '../../../../Meeting/Meeting';
+import React, {useState, useEffect, useCallback} from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import RoomDetail from "./RoomDetail/RoomDetail";
+import {storage} from "../../../../../firebase-queueting";
+import Spinner from "../../../../UI/Spinner/Spinner";
+import Modal from "../../../../UI/Modal/Modal";
+import {useSelector, useDispatch} from "react-redux";
+import * as action from "../../../../../store/actions/index";
+import Meeting from "../../../../Meeting/Meeting";
 
 const useStyles = makeStyles({
   room: {
-    float: 'left',
-    padding: '5px',
-    width: '33.3%'
+    float: "left",
+    padding: "5px",
+    width: "33.3%"
   },
   roomImg: {
-    height: '300px',
-    width: '100%',
-    borderRadius: '16px'
+    height: "300px",
+    width: "100%",
+    borderRadius: "16px"
   },
   content: {
-    fontWeight: '700',
-    fontSize: '18px'
+    fontWeight: "700",
+    fontSize: "18px"
   }
 });
 
@@ -60,8 +60,8 @@ function Room(props) {
   let roomImage = <Spinner/ >
 
     if (imageShow) {
-      roomImage = ( 
-      <CardMedia 
+      roomImage = (
+      <CardMedia
       className = {classes.roomImg}
       image = {image}>
         </CardMedia>)}
@@ -78,7 +78,7 @@ function Room(props) {
         } else {
           info.push(number);
         }
-        return info.join('');
+        return info.join("");
       }
 
       const showRoomDetailHanlder = () => {
@@ -108,51 +108,51 @@ function Room(props) {
       let meeting = null;
 
       if (detailShown) {
-        roomDetail = ( 
-          <Modal 
+        roomDetail = (
+          <Modal
             show = {detailShown}
             modalClosed = {detailClose}>
-            <RoomDetail 
+            <RoomDetail
               continued = {createContinueHandler}
               closed = {detailClose}
               roomName = {props.room.data.name}
               roomCapacity = {props.room.data.capacity}
               roomLocation = {formatLocation(props.room.data)}
               roomInfo = {props.room.data}
-            /> 
+            />
           </Modal>);
         }
 
         if (scheduling) {
-          meeting = ( 
-            <Modal 
+          meeting = (
+            <Modal
               show = {scheduling}
               modalClosed = {createCancelHandler} >
-            <Meeting 
-              create 
+            <Meeting
+              create
               closed = {createCancelHandler}
               roomCapacity = {props.room.data.capacity}
               roomName = {props.room.data.name}
               placeName = {props.placeName}
               address = {props.address}
-              roomLocation = {formatLocation(props.room.data)}/> 
+              roomLocation = {formatLocation(props.room.data)}/>
             </Modal>);
           }
 
-          return ( 
-            <> 
-            {roomDetail} 
-            {meeting} 
-            <Card className = {classes.room} >
-            <CardActionArea 
-              onClick = {showRoomDetailHanlder}> 
-              {roomImage} 
-            <CardContent 
-              className = {classes.content}> 
-              {props.room.data.name} 
-            </CardContent> 
-            </CardActionArea> 
-            </Card> 
+          return (
+            <>
+              {roomDetail}
+              {meeting}
+              <Card className = {classes.room} >
+              <CardActionArea
+                onClick = {showRoomDetailHanlder}>
+                {roomImage}
+              <CardContent
+                className = {classes.content}>
+                {props.room.data.name}
+              </CardContent>
+              </CardActionArea>
+              </Card>
             </>
           )
         }

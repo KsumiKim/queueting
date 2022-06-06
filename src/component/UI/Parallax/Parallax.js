@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,10 +12,10 @@ export default function Parallax(props) {
   } else {
     windowScrollTop = 0;
   }
-  const [transform, setTransform] = React.useState(
+  const [transform, setTransform] = useState(
     "translate3d(0," + windowScrollTop + "px,0)"
   );
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.innerWidth >= 768) {
       window.addEventListener("scroll", resetTransform);
     }

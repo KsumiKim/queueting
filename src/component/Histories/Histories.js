@@ -1,14 +1,14 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
-import Button from '../UI/Button/Button';
-import HistoryGroup from './HistoryGroup/HistoryGroup';
-import { isTimestamp } from '../Utils/utility';
+import React from "react";
+import Container from "@material-ui/core/Container";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import Button from "../UI/Button/Button";
+import HistoryGroup from "./HistoryGroup/HistoryGroup";
+import { isTimestamp } from "../Utils/utility";
 
 const useStyles = makeStyles({
   content: {
-    textAlign: 'center'
+    textAlign: "center"
   },
   section: {
     background: "#EEEEEE",
@@ -34,7 +34,7 @@ function Histories(props) {
       const year = bookDate.getFullYear();
       const month = bookDate.getMonth() + 1;
       const day = bookDate.getDate();
-      const date = [year, month, day].join('.');
+      const date = [year, month, day].join(".");
 
       if (!meetingDict[date]) {
         meetingDict[date] = [];

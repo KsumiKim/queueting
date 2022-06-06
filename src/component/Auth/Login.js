@@ -28,9 +28,9 @@ function Login() {
     setCardAnimation("");
   }, 700);
   const classes = useStyles();
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("guest@guest.com");
   const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("guest123!");
   const [isSignup, setIsSignup] = useState(false);
   const loading = useSelector((state) => state.user.loading);
   const error = useSelector((state) => state.user.error);
@@ -71,7 +71,6 @@ function Login() {
         name: nickname
       })
       .then(() => {
-
       })
       .catch((error) => {
         console.log(error);

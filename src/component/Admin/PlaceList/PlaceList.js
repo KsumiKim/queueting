@@ -52,7 +52,6 @@ const columns = [
   { id: "icons", label: "" },
 ];
 
-
 function PlaceList(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
@@ -69,11 +68,12 @@ function PlaceList(props) {
   );
 
   useEffect(() => {
-    if (!places)
+    if (!places) {
       onInitPlaces();
+    }
 
     let fetchedPlaces = [];
-    if (places) {
+    if (places && places.length > 0) {
       places.forEach(place => {
         fetchedPlaces.push(
           { id: place.placeId,
